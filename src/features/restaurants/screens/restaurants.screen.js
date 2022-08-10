@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components/native";
-import { FlatList } from "react-native";
+import { FlatList, TouchableOpacity } from "react-native";
 import { Search } from "../components/search.component";
 import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
@@ -23,8 +23,8 @@ const RestaurantList = styled(FlatList).attrs({
   },
 })``;
 
-export const RestaurantScreen = () => {
-  const { restaurants, isLoading, error } = useContext(RestaurantsContext);
+export const RestaurantsScreen = ({ navigation }) => {
+  const { restaurants, isLoading } = useContext(RestaurantsContext);
   return (
     <SafeArea>
       {isLoading && (
@@ -38,7 +38,15 @@ export const RestaurantScreen = () => {
         renderItem={(item) => {
           return (
             <Spacer position="bottom" size="large">
-              <RestaurantInfoCard restaurant={item} />
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("RestaurantDetail", {
+                    restaurant: item.item,
+                  })
+                }
+              >
+                <RestaurantInfoCard restaurant={item.item} />
+              </TouchableOpacity>
             </Spacer>
           );
         }}
