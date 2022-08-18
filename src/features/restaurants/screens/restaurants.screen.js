@@ -28,7 +28,7 @@ const RestaurantList = styled(FlatList).attrs({
 export const RestaurantsScreen = ({ navigation }) => {
   const { restaurants, isLoading } = useContext(RestaurantsContext);
   const { favourites } = useContext(FavouritesContext);
-  const { isToggled, setIsToggled } = useState(false);
+  const [isToggled, setIsToggled] = useState(false);
 
   return (
     <SafeArea>
@@ -37,7 +37,10 @@ export const RestaurantsScreen = ({ navigation }) => {
           <Loading size={50} animating={true} color={Colors.blue300} />
         </LoadingContainer>
       )}
-      <Search isToggled={isToggled} onToggle={() => setIsToggled(!isToggled)} />
+      <Search
+        isFavouritesToggled={isToggled}
+        onFavouritesToggle={() => setIsToggled(!isToggled)}
+      />
       {isToggled && (
         <FavouritesBar
           favourites={favourites}
